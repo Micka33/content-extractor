@@ -2,7 +2,7 @@ content-extractor
 =================
 
 Content-extractor is python based project. The only reason to this is the availability of the librairies. (The best ones are in python IMO)
-Currently, this project parse pdf and psd file to extract meaningful content, such as texts and images both linked into a json string
+Currently, this project parse pdf and psd file to extract meaningful content, such as texts and images both linked under a common a json string
 
 
 Dependencies
