@@ -79,7 +79,6 @@ class ImportPSD(object):
                 """ this sheet is a group and may contains many layers """
                 if sheet.visible_global:
                     arr = self.browseSheets(sheets=sheet.layers, parentName=sheet.name, page_num=page_num+1)
-                    print "num:%d" % page_num
                     self.data['pages'].append(arr)
         return array
 
