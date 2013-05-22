@@ -129,6 +129,7 @@ How to improve it
  - Speed is not an issue but why not improving it ?
  - The psd-tools library should be improved to be able to extract layers containing fx effect (is this even possible?)
  - Depending of the platform or a parameter the `\n` into the string attribute in JSON should become `<br/>` or `\r\n`
+ - Reduce the number of dependencies ?
  - What else ?
 
 Contributing
