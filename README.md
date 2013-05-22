@@ -114,3 +114,23 @@ JSON Format (from pdfreader/book.pdf 'simplified')
             }
         ]
     }
+
+
+How to improve it
+=================
+
+ - Make the difference between a pdf a psd we should check the extension not just look for pdf or psd into the name of the file
+ - The psd-tools library should be improved to be able to take out the font, bold italic underline attribute
+ - The pdfminer library should be improved to be able to take out the underline attribute
+ - Matching the pep8?
+ - Checking if the proposed image folder exist if not we create it if we can't fire an error and stop
+ - Adding support for more file format
+ - Speed is not an issue but why not improving it ?
+ - The psd-tools library should be improved to be able to extract layers containing fx effect (is this even possible?)
+ - What else ?
+
+Contributing
+=================
+
+You're welcome to contribute to this project in any way you can. If you don't know how to code, don't have time, don't worry, you still can post issue, I will be happy to answer you and correct it as fast as possible.
+Want to code ? fork it and submit pull request! Also, pull request comming with an example of what has been improved will be merge in priority.
