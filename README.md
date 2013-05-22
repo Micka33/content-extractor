@@ -15,28 +15,45 @@ Content-extractor is build upon the followings:
 - [pdfimages](http://ubuntugenius.wordpress.com/2012/02/04/how-to-extract-images-from-pdf-documents-in-ubuntulinux/) To extract images from pdf files as image.ppm
 - [ImageMagick](http://www.imagemagick.org/script/index.php) To convert the ppm images to png
 
+
 How to use it
 =================
 
-From psd files:
-Images:
-This command will extract the images into the `./images/` folder (note that the folder should already exist)
+ - From psd files:
+   - Images: This command will extract the images into the `./images/` folder (note that the folder should already exist)
 Because of the psd-tools library, layers into the psd files can't contain "Fx" effect, if so, they should be converted into "Smart Object".
-Text:
-Because of the psd-tools library, you can't know the font, bold, italic, underline attribute. The text without any other information of this kind.
+   - Text: Because of the psd-tools library, you can't know the font, bold, italic, underline attribute. The text without any other information of this kind.
+    
+    `./parser.py psdtools/work.psd './images/'`
 
-    ./parser.py psdtools/work.psd './images/'
+ - From pdf files:
+   - Images: This command will extract the images into the `./images/` folder (note that the folder should alreadyd exist)
+Images are extracted in a two step process, first we extract them as ppm with a temporary name, then we convert them into png files with their final name.
 
-From pdf files:
-Images:
-This command will extract the images into the `./images/` folder (note that the folder should alreadyd exist)
-Images are extracted in a two step process, first we extract them as ppm with a temporary name, them we convert them into png files with their final name.
-Text:
-Because of the pdfminer library, you can't have many fonts in the same paragraph. It is also not possible to extract the underlines. However the bold and italic attribute are extracted as html and directly integrated into the string.
+   - Text: Because of the pdfminer library, you can't have many fonts in the same paragraph. It is also not possible to extract the underlines. However the bold and italic attribute are extracted as html and directly integrated into the string.
 
-    ./parser.py pdfreader/book.pdf './images/'
+    `./parser.py pdfreader/book.pdf './images/'`
 
-JSON Format
+
+How does it work
+=================
+
+The information are extracted having in mind to keep the parent-child relations.
+
+ - For a pdf file:
+    - A pdf file can have many pages, and so the json string goes. each page has many images and many paragraphs.
+    - Each paragraph has a width, height, a content(string), a y and x position, a font, and a font size.
+    - For a pdf file the original image name can't be extracted so the images are name like the followong [uniqId]_p[pageNumber].png. uniqId is a unique Id, pageNumber is the page in which the images is contained. you shouldn't need to use this information since the json string contains it.
+
+ - For a psd file:
+    - A psd file can have many groups which are translated in pages into the json string. each group in a psd file can have many layers, a layer can be either text(paragraphs) or an image(images).
+    - Each text layer has a width, height, a content(string), a y and x position. The font and font size are currenlty not extracted (because psd-tools doesn't do it).
+    - For a psd file the image is name with the layer name it come from, but since many layers can have the same name the following is applied to be sure we have a unique name. [uniqId]_[layerName]_[groupName].png.
+
+
+You can see under a simplified example taken out from book.pdf of how look the json string.
+
+JSON Format (from pdfreader/book.pdf 'simplified')
 =================
 
     {
