@@ -128,6 +128,7 @@ How to improve it
  - Adding support for more file format
  - Speed is not an issue but why not improving it ?
  - The psd-tools library should be improved to be able to extract layers containing fx effect (is this even possible?)
+ - Depending of the platform or a parameter the \n into the string attribute in JSON should become <br/> or \r\n
  - What else ?
 
 Contributing
