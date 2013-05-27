@@ -6,7 +6,10 @@ def parse(file_path, image_folder):
     elif 'pdf' in file_path:
         from pdfreader import main
     json = main.run(file_path, image_folder)
-    print json
+    """ We write the json into a file called metadata.json """
+    target = open("metadata.json", 'w+') ## a will append, w will over-write
+    target.write(json)
+    target.close()
 
 if __name__ == '__main__':
     import sys
