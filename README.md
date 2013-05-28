@@ -137,7 +137,6 @@ JSON Format (from pdfreader/book.pdf 'simplified')
 How to improve it
 =================
 
- - Make the difference between a pdf a psd we should check the extension not just look for pdf or psd into the name of the file
  - The psd-tools library should be improved to be able to take out the font, bold italic underline attribute
  - The pdfminer library should be improved to be able to take out the underline attribute
  - Matching the pep8?
