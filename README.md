@@ -17,18 +17,34 @@ Content-extractor is build upon the followings:
 - [ImageMagick](http://www.imagemagick.org/script/index.php) To convert the ppm images to png
 
 
+Installation
+=================
+
+Since there is a lot of dependencies and most of them also have their own dependencies, I have made a shellscript to simplify the installation process.
+
+The script assume the following:
+
+ - Mac users already have installed [XQuartz](http://xquartz.macosforge.org/landing/).
+ - If you don't have [apt-get](http://doc.ubuntu-fr.org/apt-get) then you should have [brew](http://mxcl.github.io/homebrew/).
+ - You have [curl](http://pwet.fr/man/linux/commandes/curl) installed (the shell executable, not the php module).
+
+When you launch the script it is installing [pip](https://pypi.python.org/pypi/pip) and [easy_install](http://pythonhosted.org/distribute/easy_install.html) if they are not already present on your system.
+
+    cd install
+    sh install.sh
+
 How to use it
 =================
 
  - From psd files:
-   - Images: This command will extract the images into the `./images/` folder (note that the folder should already exist)
+   - Images: This command will extract the images into the `./images/` folder (note that the folder should already exist).
 Because of the psd-tools library, layers into the psd files can't contain "Fx" effect, if so, they should be converted into "Smart Object".
    - Text: Because of the psd-tools library, you can't know the font, bold, italic, underline attribute. The text without any other information of this kind.
     
     `./parser.py psdtools/work.psd './images/'`
 
  - From pdf files:
-   - Images: This command will extract the images into the `./images/` folder (note that the folder should alreadyd exist)
+   - Images: This command will extract the images into the `./images/` folder (note that the folder should alreadyd exist).
 Images are extracted in a two step process, first we extract them as ppm with a temporary name, then we convert them into png files with their final name.
 
    - Text: Because of the pdfminer library, you can't have many fonts in the same paragraph. It is also not possible to extract the underlines. However the bold and italic attribute are extracted as html and directly integrated into the string.

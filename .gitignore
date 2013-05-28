@@ -10,3 +10,6 @@ psdtools/.DS_Store
 psdtools/images/.DS_Store
 
 *.pyc
+
+/.DS_Store
+/install/.DS_Store
