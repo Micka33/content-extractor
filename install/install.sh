@@ -1,4 +1,4 @@
-sudo mkdir install02500809
+mkdir install02500809
 cd install02500809
 echo "changing mode of /usr/local/etc to 775\n"
 sudo chmod 775 /usr/local/etc
@@ -20,7 +20,7 @@ type pip >/dev/null 2>&1 || {
                                 curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
                                 sudo python get-pip.py
                                 cd ..
-                                sudo rm -rf pipInstall
+                                rm -rf pipInstall
                             }
 echo "Done pip\n"
 
@@ -42,7 +42,7 @@ cd lcmsextract/lcms-1.19
 make
 sudo make install
 cd ../..
-sudo rm -rf lcmsextract
+rm -rf lcmsextract
 echo "Done pil dependecies\n"
 
 # psd-tools dependencies
@@ -71,7 +71,7 @@ cd pdfminer-20110515
 make cmap
 sudo python setup.py install
 cd ../..
-sudo rm -rf pdfminerInstall
+rm -rf pdfminerInstall
 echo "Done pdfminer\n"
 
 # Installing beautifullsoup
@@ -108,8 +108,8 @@ type convert >/dev/null 2>&1 || {
                                     sudo make install
                                     sudo ldconfig /usr/local/lib
                                     cd ../..
-                                    sudo rm -rf imagemagickInstall
+                                    rm -rf imagemagickInstall
                                 }
 echo "Done convert\n"
 cd ..
-sudo rm -rf install02500809
+rm -rf install02500809
