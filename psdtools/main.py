@@ -68,10 +68,10 @@ class ImportPSD(object):
                 else:
                     """ If it's an image """
                     imageName = str(uuid.uuid1())+'_'+sheet.name+'_'+parentName+'.png'
-                #    if sheet is not None and sheet.as_PIL() is not None:
-                #        #sheet.as_PIL().save(self.imagePath+imageName)
-                #    else:
-                #        imageName = None
+                    if sheet is not None and sheet.as_PIL() is not None:
+                        sheet.as_PIL().save(self.imagePath+imageName)
+                    else:
+                        imageName = None
                     if 'images' not in array:
                         array['images'] = []
                     array['images'].append(imageName)

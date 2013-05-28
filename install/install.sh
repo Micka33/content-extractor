@@ -61,8 +61,6 @@ echo "Done pil dependecies\n"
 echo "Installing psd-tools dependecies\n"
 echo "Now installing packbits\n"
 sudo pip install -U packbits
-echo "Now installing Pillow\n"
-sudo pip install -U Pillow
 echo "Now installing docops\n"
 sudo pip install -U docopt
 echo "Now installing pil\n"
