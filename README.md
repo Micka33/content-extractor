@@ -20,7 +20,7 @@ Content-extractor is build upon the followings:
 Installation
 =================
 
-Since there is a lot of dependencies and most of them also have their own dependencies, I have made a shellscript to simplify the installation process. The script is not perfect and I have still issues on my mac.
+Since there is a lot of dependencies and most of them also have their own dependencies, I have made a shellscript to simplify the installation process.
 
 The script assume the following:
 
