@@ -20,15 +20,15 @@ Content-extractor is build upon the followings:
 Installation
 =================
 
-Since there is a lot of dependencies and most of them also have their own dependencies, I have made a shellscript to simplify the installation process.
+Since there is a lot of dependencies and most of them also have their own dependencies, I have made a shellscript to simplify the installation process. The script is not perfect and I have still issues on my mac.
 
 The script assume the following:
 
  - Mac users already have installed [XQuartz](http://xquartz.macosforge.org/landing/).
- - If you don't have [apt-get](http://doc.ubuntu-fr.org/apt-get) then you should have [brew](http://mxcl.github.io/homebrew/).
+ - If you don't have [apt-get](http://doc.ubuntu-fr.org/apt-get), then you should have [brew](http://mxcl.github.io/homebrew/).
  - You have [curl](http://pwet.fr/man/linux/commandes/curl) installed (the shell executable, not the php module).
 
-When you launch the script it is installing [pip](https://pypi.python.org/pypi/pip) and [easy_install](http://pythonhosted.org/distribute/easy_install.html) if they are not already present on your system.
+When you launch the script, it's installing [pip](https://pypi.python.org/pypi/pip) and [easy_install](http://pythonhosted.org/distribute/easy_install.html), if they are not already present on your system.
 
     cd install
     sh install.sh
