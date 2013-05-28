@@ -41,6 +41,19 @@ class ImportPSD(object):
         self.PSDFilePath = PSDFilePath
         self.imagePath = imagePath
         self.psd = PSDImage.load(PSDFilePath)
+        self.nb_layers = self.countLayers(layers=self.psd.layers)
+        print "Layers to process: %d" % self.nb_layers
+
+    @classmethod
+    def countLayers(self, layers, layer_num=0):
+        for sheet in layers:
+            if isinstance(sheet, psd_tools.user_api.psd_image.Layer):
+                layer_num += 1
+            elif isinstance(sheet, psd_tools.user_api.psd_image.Group):
+                if sheet.visible_global:
+                    layer_num = self.browseSheets(sheets=sheet.layers, layer_num=layer_num+1)
+        return  layer_num
+
 
     @classmethod
     def parse(self):
@@ -51,6 +64,8 @@ class ImportPSD(object):
         array = {}
         for sheet in sheets:
             if isinstance(sheet, psd_tools.user_api.psd_image.Layer):
+                print "Processing layer: %d" % self.nb_layers
+                self.nb_layers -= 1
                 """ this sheet is a layer, it may be an image or some text """
                 if sheet.text_data is not None:
                     """ If it's a text """
@@ -77,6 +92,7 @@ class ImportPSD(object):
                     array['images'].append(imageName)
             elif isinstance(sheet, psd_tools.user_api.psd_image.Group):
                 """ this sheet is a group and may contains many layers """
+                print "Now processing group " % page_num
                 if sheet.visible_global:
                     arr = self.browseSheets(sheets=sheet.layers, parentName=sheet.name, page_num=page_num+1)
                     self.data['pages'].append(arr)

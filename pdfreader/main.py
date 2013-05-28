@@ -22,7 +22,7 @@ import subprocess
 import sys
 
 def extract_images(file):
-    subprocess.call('/usr/local/bin/pdfimages -p '+file+' tempppm', shell=True, stderr=sys.stdout)
+    subprocess.call('/usr/local/bin/pdfimages -p -j '+file+' tempimg', shell=True, stderr=sys.stdout)
 
 
 
@@ -38,9 +38,22 @@ import os
 
 def get_ppm_names_by_page_number():
     image_list = {}
-    ppm_images = glob.glob('./tempppm*.ppm')
+    ppm_images = glob.glob('./tempimg*.ppm')
     for image in ppm_images:
-        match = re.match( r'\./tempppm\-(\d+)\-(\d+)\.ppm', image, re.M|re.I)
+        match = re.match( r'\./tempimg\-(\d+)\-(\d+)\.ppm', image, re.M|re.I)
+        if match:
+            page_num = int(match.group(1)) - 1
+            image_num = int(match.group(2))
+            if page_num not in image_list:
+                image_list[page_num] = {}
+            image_list[page_num].update({image_num:image})
+    return image_list
+
+def get_jpeg_names_by_page_number():
+    image_list = {}
+    ppm_images = glob.glob('./tempimg*.jpg')
+    for image in ppm_images:
+        match = re.match( r'\./tempimg\-(\d+)\-(\d+)\.jpg', image, re.M|re.I)
         if match:
             page_num = int(match.group(1)) - 1
             image_num = int(match.group(2))
@@ -60,16 +73,30 @@ def convert_ppm_to_png__update_dict(image_list, dict_book, image_folder):
             os.remove(image_list[page][image])
     return dict_book
 
-def get_images_update_dict(dict_book, image_folder):
-    image_list = get_ppm_names_by_page_number()
-    dict_book = convert_ppm_to_png__update_dict(image_list, dict_book, image_folder)
+def rename_jpeg__update_dict(image_list, dict_book, image_folder):
+    for page in image_list.iterkeys():
+        for image in image_list[page].iterkeys():
+            if 'images' not in dict_book['pages'][page]:
+                dict_book['pages'][page].update({'images':[]})
+            image_name = "%s_p%d.jpg" % (uuid.uuid1(), page)
+            dict_book['pages'][page]['images'].append(image_name)
+            subprocess.call('mv %s %s'%(image_list[page][image], image_folder+image_name), shell=True, stderr=sys.stdout)
+    return dict_book
+
+def get_images_update_dict(dict_book, image_folder, AS="ppm"):
+    if "ppm" in AS:
+        image_list = get_ppm_names_by_page_number()
+        dict_book = convert_ppm_to_png__update_dict(image_list, dict_book, image_folder)
+    elif "jpeg" in AS:
+        image_list = get_jpeg_names_by_page_number()
+        dict_book = rename_jpeg__update_dict(image_list, dict_book, image_folder)
     return dict_book
 
 
 def run(pdf_file, image_folder):
     dict_book = text_to_dict(pdf_file)
     extract_images(pdf_file)
-    dict_book = get_images_update_dict(dict_book, image_folder)
+    dict_book = get_images_update_dict(dict_book, image_folder, "jpeg")
     return json.dumps(dict_book)
 
 

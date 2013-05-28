@@ -65,9 +65,9 @@ echo "Done psd-tools\n"
 echo "Installing pdfminer\n"
 mkdir pdfminerInstall
 cd pdfminerInstall
-curl -O  https://pypi.python.org/packages/source/p/pdfminer/pdfminer-20110515.tar.gz
-tar xvfz pdfminer-20110515.tar.gz
-cd pdfminer-20110515
+curl -O https://codeload.github.com/euske/pdfminer/zip/master
+unzip master
+cd pdfminer-master
 make cmap
 sudo python setup.py install
 cd ../..
@@ -87,8 +87,10 @@ type pdfimages >/dev/null 2>&1 || {
                                                                         sudo apt-get install poppler-utils
                                                                      } || {
                                                                         type brew >/dev/null 2>&1 && {
-                                                                                                        brew install xpdf
+                                                                                                        brew install fontconfig
+                                                                                                        brew link --overwrite fontconfig
                                                                                                         brew install poppler
+                                                                                                        brew link --overwrite poppler
                                                                                                      }
                                                                      }
                                   }
