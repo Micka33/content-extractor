@@ -64,7 +64,7 @@ sudo pip install -U packbits
 echo "Now installing docops\n"
 sudo pip install -U docopt
 echo "Now installing pil\n"
-sudo easy_install pil
+sudo pip install -U pil
 echo "Done psd-tools dependecies\n"
 
 
