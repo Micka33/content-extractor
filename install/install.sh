@@ -23,18 +23,6 @@ type pip >/dev/null 2>&1 || {
                                 sudo rm -rf pipInstall
                             }
 echo "Done pip\n"
-# We check that easy_install exist on the system
-echo "Checking easy_install availability\n"
-type easy_install >/dev/null 2>&1 || {
-                                        echo "easy_install unavailable\nNow installing easy_install"
-                                        mkdir easy_install
-                                        cd easy_install
-                                        curl -O https://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg
-                                        sudo sh setuptools-0.6c9-py2.4.egg
-                                        cd ..
-                                        sudo rm -rf easy_install
-                                     }
-echo "Done easy_install\n"
 
 # pil dependencies
 echo "Installing pil dependecies\n"

@@ -29,7 +29,7 @@ The script assume the following:
  - You have [curl](http://pwet.fr/man/linux/commandes/curl) installed (the shell executable, not the php module).
  - You have python 2.7.x installed on your system
 
-When you launch the script, it's installing [pip](https://pypi.python.org/pypi/pip) and [easy_install](http://pythonhosted.org/distribute/easy_install.html), if they are not already present on your system.
+When you launch the script, it's installing [pip](https://pypi.python.org/pypi/pip), if it isn't already present on your system.
 
     cd install
     sh install.sh
