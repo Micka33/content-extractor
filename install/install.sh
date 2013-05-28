@@ -1,5 +1,14 @@
-mkdir install02500809
+sudo mkdir install02500809
 cd install02500809
+echo "changing mode of /usr/local/etc to 775\n"
+sudo chmod 775 /usr/local/etc
+# We check the python2 avalaibility
+echo "Checking python2 availability\n"
+type python2 >/dev/null 2>&1 || { 
+                                    echo "python2 unavaliable\nNow creating python2 as alias of python\n"
+                                    alias python2="python"
+                                }
+echo "Done python2\n"
 # We suppose that the system has apt-get command already installed (if pdfimages is not available)
 # We suppose that the system has curl command already installed
 # We check that pip exist on the system
@@ -38,8 +47,6 @@ type apt-get >/dev/null 2>&1 && {
                                                                     brew install zlib
                                                                  }
                                  }
-
-ls -la
 mkdir lcmsextract
 tar xzf ../lcms-1.19.tar.gz --directory=./lcmsextract
 cd lcmsextract/lcms-1.19
