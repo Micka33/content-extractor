@@ -33,8 +33,8 @@ The script assume the following:
 When you launch the script, it's installing [pip](https://pypi.python.org/pypi/pip), if it isn't already present on your system.
 
 ```Shell
-    cd install
-    sh install.sh
+    $ cd install
+    $ sh install.sh
 ```
 
 How to use it
