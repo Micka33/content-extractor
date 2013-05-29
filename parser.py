@@ -24,19 +24,19 @@ def parse(file_path, image_folder):
                 from psdtools import main
             elif magicNumber == "%PDF": #PDF file
                 from pdfreader import main
-            json = main.run(file_path, image_folder)
-            """ We write the json into a file called metadata.json """
-            target = open("metadata.json", 'w+') ## a will append, w will over-write
-            target.write(json)
-            target.close()
+            return main.run(file_path, image_folder)
         else:
-            print "%s: not a psd nor a pdf (Magic Number unknown)" % file_path
+            print "%s: not a psd nor a pdf (unknown Magic Number)" % file_path
     else:
         print "%s: file not found." % file_path
 
 if __name__ == '__main__':
     import sys
     if len(sys.argv) is 3:
-        parse(sys.argv[1], sys.argv[2])
+        json = parse(sys.argv[1], sys.argv[2])
+        """ We write the json into a file called metadata.json """
+        target = open("metadata.json", 'w+') ## a will append, w will over-write
+        target.write(json)
+        target.close()
     else:
         print "usage: %s pdf_or_psd_file_path generated_images_path/ (eg: python %s book.pdf/.psd './images/')" % (sys.argv[0], sys.argv[0])

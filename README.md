@@ -38,20 +38,57 @@ When you launch the script, it's installing [pip](https://pypi.python.org/pypi/p
 How to use it
 =================
 
- - From psd files:
-   - Images: This command will extract the images into the `./images/` folder (note that the folder should already exist).
-Because of the psd-tools library, layers into the psd files can't contain "Fx" effect, if so, they should be converted into "Smart Object".
-   - Text: Because of the psd-tools library, you can't know the font, bold, italic, underline attribute. The text without any other information of this kind.
-    
-    `./parser.py psdtools/work.psd './images/'`
+For any extension (currently pdf/psd) you can use `parser.py [file_path] [image_path]` it will automaticaly do the job.
 
- - From pdf files:
-   - Images: This command will extract the images into the `./images/` folder (note that the folder should alreadyd exist).
-Images are extracted in a two step process, first we extract them as ppm with a temporary name, then we convert them into png files with their final name.
+    #Will write a metada.json and extract the images into the folder images
+    ./parser.py psdtools/work.psd './images/'
+    ./parser.py pdfreader/book.pdf './images/'
 
-   - Text: Because of the pdfminer library, you can't have many fonts in the same paragraph. It is also not possible to extract the underlines. However the bold and italic attribute are extracted as html and directly integrated into the string.
+You can also import parser.py into your own python project and use it the folowing way:
 
-    `./parser.py pdfreader/book.pdf './images/'`
+    #will return a string containing the json and extract the images into the folder images
+    from parser import parser
+    json = parser.parse("psdtools/work.psd", "./images/")
+    json = parser.parse("pdfreader/book.pdf", "./images/")
+
+
+You can also use the pdfreader and psdtools script independently doing so:
+
+    Shell:
+
+    ./psdtools/main.py psdtools/work.psd './images/'
+    ./pdfreader/main.py pdfreader/book.pdf './images/'
+
+
+    Python:
+
+    from psdtools import main
+    json main.run("psdtools/work.psd", "./images/")
+
+    from pdfreader import main
+    json main.run("pdfreader/book.pdf", "./images/")
+    json main.run("pdfreader/book.pdf", "./images/", "ppm")#will extract the images as ppm/pbm ad then convert them as png
+    json main.run("pdfreader/book.pdf", "./images/", "jpeg")#default: will extract the images directly as jpg
+
+
+./pdfreader/main.py is just a simplified interface to the very powerful pdfreader/util/convert.py, I have rewrite convert.py to be a class, but this is originally [pdf2txt.py](http://www.unixuser.org/~euske/python/pdfminer/#pdf2txt) from [pdfminer](http://www.unixuser.org/~euske/python/pdfminer/index.html).
+However, you can still use convert.py as if it was the originial [pdf2txt.py](http://www.unixuser.org/~euske/python/pdfminer/index.html#pdf2txt) tool, [here is the documentation](http://www.unixuser.org/~euske/python/pdfminer/index.html#pdf2txt).
+
+    $ pdfreader/util/convert.py -o output.html samples/naacl06-shinyama.pdf
+    (extract text as an HTML file whose filename is output.html)
+
+    $ pdfreader/util/convert.py -V -c euc-jp -o output.html samples/jo.pdf
+    (extract a Japanese HTML file in vertical writing, CMap is required)
+
+    $ pdfreader/util/convert.py -P mypassword -o output.txt secret.pdf
+    (extract a text from an encrypted PDF file)
+
+convert.py can also be imported in a python project (but less options are available due to my lack of implementation)
+
+    # @see pdfreader/main.py:text_to_dict as example
+    from util.convert import converter
+    convert = converter()
+    xml = convert.as_xml().add_input_file(fileinput).run()
 
 
 How does it work
@@ -69,6 +106,11 @@ The information are extracted having in mind to keep the parent-child relations.
     - Each text layer has a width, height, a content(string), a y and x position. The font and font size are currenlty not extracted (because psd-tools doesn't do it).
     - For a psd file the image is name with the layer name it come from, but since many layers can have the same name the following is applied to be sure we have a unique name. [uniqId]_[layerName]_[groupName].png.
 
+ - PSD files:
+   - Text: Because of the psd-tools library, you can't know the font, bold, italic, underline attribute.
+
+ - PDF files:
+   - Text: Because of the pdfminer library, you can't have many fonts in the same paragraph. It is also not possible to extract the underlines. However the bold and italic attribute are extracted as html and directly integrated into the string.
 
 You can see under a simplified example taken out from book.pdf of how look the json string.
 
