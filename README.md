@@ -32,8 +32,8 @@ The script assume the following:
 When you launch the script, it's installing [pip](https://pypi.python.org/pypi/pip), if it isn't already present on your system.
 
 ```Shell
-    $ cd install
-    $ sh install.sh
+$ cd install
+$ sh install.sh
 ```
 
 How to use it
@@ -42,38 +42,38 @@ How to use it
 For any extension (currently pdf/psd) you can use `parser.py [file_path] [image_path]` it will automaticaly do the job.
 
 ```Python
-    #Will write a metada.json and extract the images into the folder images
-    ./parser.py psdtools/work.psd './images/'
-    ./parser.py pdfreader/book.pdf './images/'
+#Will write a metada.json and extract the images into the folder images
+./parser.py psdtools/work.psd './images/'
+./parser.py pdfreader/book.pdf './images/'
 ```
 
 You can also import parser.py into your own python project and use it the folowing way:
 
 ```Python
-    #will return a string containing the json and extract the images into the folder images
-    from parser import parser
-    json = parser.parse("psdtools/work.psd", "./images/")
-    json = parser.parse("pdfreader/book.pdf", "./images/")
+#will return a string containing the json and extract the images into the folder images
+from parser import parser
+json = parser.parse("psdtools/work.psd", "./images/")
+json = parser.parse("pdfreader/book.pdf", "./images/")
 ```
 
 You can also use the pdfreader and psdtools script independently doing so:
 
 
 ```Shell
-    # Shell:
-    $ ./psdtools/main.py psdtools/work.psd './images/'
-    $ ./pdfreader/main.py pdfreader/book.pdf './images/'
+# Shell:
+$ ./psdtools/main.py psdtools/work.psd './images/'
+$ ./pdfreader/main.py pdfreader/book.pdf './images/'
 ```
 ```Python
-    # Python:
-    # PSD
-    from psdtools import main
-    json = main.run("psdtools/work.psd", "./images/")
-    # PDF
-    from pdfreader import main
-    json = main.run("pdfreader/book.pdf", "./images/")
-    json = main.run("pdfreader/book.pdf", "./images/", "ppm") #will extract the images as ppm/pbm ad then convert them as png
-    json = main.run("pdfreader/book.pdf", "./images/", "jpeg") #default: will extract the images directly as jpg
+# Python:
+# PSD
+from psdtools import main
+json = main.run("psdtools/work.psd", "./images/")
+# PDF
+from pdfreader import main
+json = main.run("pdfreader/book.pdf", "./images/")
+json = main.run("pdfreader/book.pdf", "./images/", "ppm") #will extract the images as ppm/pbm ad then convert them as png
+json = main.run("pdfreader/book.pdf", "./images/", "jpeg") #default: will extract the images directly as jpg
 ```
 
 
@@ -81,23 +81,23 @@ You can also use the pdfreader and psdtools script independently doing so:
 However, you can still use convert.py as if it was the originial [pdf2txt.py](http://www.unixuser.org/~euske/python/pdfminer/index.html#pdf2txt) tool, [here is the documentation](http://www.unixuser.org/~euske/python/pdfminer/index.html#pdf2txt).
 
 ```Shell
-    $ pdfreader/util/convert.py -o output.html samples/naacl06-shinyama.pdf
-    (extract text as an HTML file whose filename is output.html)
+$ pdfreader/util/convert.py -o output.html samples/naacl06-shinyama.pdf
+(extract text as an HTML file whose filename is output.html)
 
-    $ pdfreader/util/convert.py -V -c euc-jp -o output.html samples/jo.pdf
-    (extract a Japanese HTML file in vertical writing, CMap is required)
+$ pdfreader/util/convert.py -V -c euc-jp -o output.html samples/jo.pdf
+(extract a Japanese HTML file in vertical writing, CMap is required)
 
-    $ pdfreader/util/convert.py -P mypassword -o output.txt secret.pdf
-    (extract a text from an encrypted PDF file)
+$ pdfreader/util/convert.py -P mypassword -o output.txt secret.pdf
+(extract a text from an encrypted PDF file)
 ```
 
 convert.py can also be imported in a python project (but less options are available due to my lack of implementation)
 
 ```Python
-    # @see pdfreader/main.py:text_to_dict as example
-    from util.convert import converter
-    convert = converter()
-    xml = convert.as_xml().add_input_file(fileinput).run()
+# @see pdfreader/main.py:text_to_dict as example
+from util.convert import converter
+convert = converter()
+xml = convert.as_xml().add_input_file(fileinput).run()
 ```
 
 How does it work
@@ -127,64 +127,64 @@ JSON Format (from pdfreader/book.pdf 'simplified')
 =================
 
 ```JSON
-    {
-        "pages": [
-            {
-                "images": [
-                    "961dfcc0-c1eb-11e2-92af-040ccedc7e34_p0.png"
-                ],
-                "paragraphs": [
-                    {
-                        "size": 98,
-                        "width": 587,
-                        "string": "Book Title",
-                        "y": -98,
-                        "x": -324,
-                        "font": "Georgia",
-                        "height": 705
-                    }
-                ]
-            },
-            {
-                "images": [
-                    "96f4e9ee-c1eb-11e2-ad2b-040ccedc7e34_p1.png"
-                ],
-                "paragraphs": [
-                    {
-                        "size": 24,
-                        "width": 138,
-                        "string": "CHAPTER 1",
-                        "y": -24,
-                        "x": -88,
-                        "font": "Georgia",
-                        "height": 711
-                    },
-                    {
-                        "size": 33,
-                        "width": 489,
-                        "string": "Lorem ipsum dolor sit amet, consectetur \n<i>adipisicing</i> <b>elit, sed</b> <i><b>do eiusmod</i></b>\ntempor incididunt ut labore et dolore \nmagna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris \nnisi ut aliquip ex ea commodo\nconsequat.",
-                        "y": -229,
-                        "x": -439,
-                        "font": "Georgia",
-                        "height": 269
-                    }
-                ]
-            },
-            {
-                "paragraphs": [
-                    {
-                        "size": 24,
-                        "width": 133,
-                        "string": "SECTION 1",
-                        "y": -24,
-                        "x": -83,
-                        "font": "Georgia",
-                        "height": 711
-                    }
-                ]
-            }
-        ]
-    }
+{
+    "pages": [
+        {
+            "images": [
+                "961dfcc0-c1eb-11e2-92af-040ccedc7e34_p0.png"
+            ],
+            "paragraphs": [
+                {
+                    "size": 98,
+                    "width": 587,
+                    "string": "Book Title",
+                    "y": -98,
+                    "x": -324,
+                    "font": "Georgia",
+                    "height": 705
+                }
+            ]
+        },
+        {
+            "images": [
+                "96f4e9ee-c1eb-11e2-ad2b-040ccedc7e34_p1.png"
+            ],
+            "paragraphs": [
+                {
+                    "size": 24,
+                    "width": 138,
+                    "string": "CHAPTER 1",
+                    "y": -24,
+                    "x": -88,
+                    "font": "Georgia",
+                    "height": 711
+                },
+                {
+                    "size": 33,
+                    "width": 489,
+                    "string": "Lorem ipsum dolor sit amet, consectetur \n<i>adipisicing</i> <b>elit, sed</b> <i><b>do eiusmod</i></b>\ntempor incididunt ut labore et dolore \nmagna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris \nnisi ut aliquip ex ea commodo\nconsequat.",
+                    "y": -229,
+                    "x": -439,
+                    "font": "Georgia",
+                    "height": 269
+                }
+            ]
+        },
+        {
+            "paragraphs": [
+                {
+                    "size": 24,
+                    "width": 133,
+                    "string": "SECTION 1",
+                    "y": -24,
+                    "x": -83,
+                    "font": "Georgia",
+                    "height": 711
+                }
+            ]
+        }
+    ]
+}
 ```
 
 How to improve it
