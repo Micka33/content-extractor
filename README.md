@@ -13,7 +13,7 @@ Content-extractor is build upon the followings:
 - [psd-tools](https://pypi.python.org/pypi/psd-tools/) To extract images and text from psd files
 - [pdfminer](http://www.unixuser.org/~euske/python/pdfminer/#intro) To extract text from pdf files as xml
 - [beautiful soup](http://www.crummy.com/software/BeautifulSoup/bs4/doc/) To convert the extracted xml as json
-- [pdfimages](http://ubuntugenius.wordpress.com/2012/02/04/how-to-extract-images-from-pdf-documents-in-ubuntulinux/) To extract images from pdf files as image.ppm
+- [pdfimages](http://ubuntugenius.wordpress.com/2012/02/04/how-to-extract-images-from-pdf-documents-in-ubuntulinux/) (from poppler-utils) To extract images from pdf files as image.ppm
 - [ImageMagick](http://www.imagemagick.org/script/index.php) To convert the ppm images to png
 
 
@@ -24,7 +24,6 @@ Since there is a lot of dependencies and most of them also have their own depend
 
 The script assume the following:
 
- - Mac users already have installed [XQuartz](http://xquartz.macosforge.org/landing/).
  - If you don't have [apt-get](http://doc.ubuntu-fr.org/apt-get), then you should have [brew](http://mxcl.github.io/homebrew/).
  - You have [curl](http://pwet.fr/man/linux/commandes/curl) installed (the shell executable, not the php module).
  - You have [python 2.7.x](http://www.python.org/download/) installed on your system.
