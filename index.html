@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Content-extractor : Extract meaningful content from pdf and psd file, such as texts and images both linked into a common JSON string" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Content-extractor</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/Micka33/content-extractor">View on GitHub</a>
+
+          <h1 id="project_title">Content-extractor</h1>
+          <h2 id="project_tagline">Extract meaningful content from pdf and psd file, such as texts and images both linked into a common JSON string</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/Micka33/content-extractor/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/Micka33/content-extractor/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="content-extractor" class="anchor" href="#content-extractor"><span class="octicon octicon-link"></span></a>content-extractor</h1>
+
+<p>Content-extractor is python based project. The only reason to this is the availability of the librairies. (The best ones are in python IMO)
+Currently, this project parse pdf and psd file to extract meaningful content, such as texts and images both linked under a common json string</p>
+
+<h1>
+<a name="dependencies" class="anchor" href="#dependencies"><span class="octicon octicon-link"></span></a>Dependencies</h1>
+
+<p>Content-extractor is build upon the followings:</p>
+
+<ul>
+<li>
+<a href="https://pypi.python.org/pypi/psd-tools/">psd-tools</a> To extract images and text from psd files</li>
+<li>
+<a href="http://www.unixuser.org/%7Eeuske/python/pdfminer/#intro">pdfminer</a> To extract text from pdf files as xml</li>
+<li>
+<a href="http://www.crummy.com/software/BeautifulSoup/bs4/doc/">beautiful soup</a> To convert the extracted xml as json</li>
+<li>
+<a href="http://ubuntugenius.wordpress.com/2012/02/04/how-to-extract-images-from-pdf-documents-in-ubuntulinux/">pdfimages</a> (from poppler-utils) To extract images from pdf files as image.ppm</li>
+<li>
+<a href="http://www.imagemagick.org/script/index.php">ImageMagick</a> To convert the ppm images to png</li>
+</ul><h1>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h1>
+
+<p>Since there is a lot of dependencies and most of them also have their own dependencies, I have made a shellscript to simplify the installation process.</p>
+
+<p>The script assume the following:</p>
+
+<ul>
+<li>If you don't have <a href="http://doc.ubuntu-fr.org/apt-get">apt-get</a>, then you should have <a href="http://mxcl.github.io/homebrew/">brew</a>.</li>
+<li>You have <a href="http://pwet.fr/man/linux/commandes/curl">curl</a> installed (the shell executable, not the php module).</li>
+<li>You have <a href="http://www.python.org/download/">python 2.7.x</a> installed on your system.</li>
+<li>You have <a href="http://www.info-zip.org/mans/unzip.html">unzip</a> installed on your system.</li>
+</ul><p>When you launch the script, it's installing <a href="https://pypi.python.org/pypi/pip">pip</a>, if it isn't already present on your system.</p>
+
+<pre lang="Shell"><code>    $ cd install
+    $ sh install.sh
+</code></pre>
+
+<h1>
+<a name="how-to-use-it" class="anchor" href="#how-to-use-it"><span class="octicon octicon-link"></span></a>How to use it</h1>
+
+<p>For any extension (currently pdf/psd) you can use <code>parser.py [file_path] [image_path]</code> it will automaticaly do the job.</p>
+
+<div class="highlight"><pre>    <span class="c">#Will write a metada.json and extract the images into the folder images</span>
+    <span class="o">./</span><span class="n">parser</span><span class="o">.</span><span class="n">py</span> <span class="n">psdtools</span><span class="o">/</span><span class="n">work</span><span class="o">.</span><span class="n">psd</span> <span class="s">'./images/'</span>
+    <span class="o">./</span><span class="n">parser</span><span class="o">.</span><span class="n">py</span> <span class="n">pdfreader</span><span class="o">/</span><span class="n">book</span><span class="o">.</span><span class="n">pdf</span> <span class="s">'./images/'</span>
+</pre></div>
+
+<p>You can also import parser.py into your own python project and use it the folowing way:</p>
+
+<div class="highlight"><pre>    <span class="c">#will return a string containing the json and extract the images into the folder images</span>
+    <span class="kn">from</span> <span class="nn">parser</span> <span class="kn">import</span> <span class="n">parser</span>
+    <span class="n">json</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s">"psdtools/work.psd"</span><span class="p">,</span> <span class="s">"./images/"</span><span class="p">)</span>
+    <span class="n">json</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s">"pdfreader/book.pdf"</span><span class="p">,</span> <span class="s">"./images/"</span><span class="p">)</span>
+</pre></div>
+
+<p>You can also use the pdfreader and psdtools script independently doing so:</p>
+
+<pre lang="Shell"><code>    # Shell:
+    $ ./psdtools/main.py psdtools/work.psd './images/'
+    $ ./pdfreader/main.py pdfreader/book.pdf './images/'
+</code></pre>
+
+<div class="highlight"><pre>    <span class="c"># Python:</span>
+    <span class="c"># PSD</span>
+    <span class="kn">from</span> <span class="nn">psdtools</span> <span class="kn">import</span> <span class="n">main</span>
+    <span class="n">json</span> <span class="o">=</span> <span class="n">main</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">"psdtools/work.psd"</span><span class="p">,</span> <span class="s">"./images/"</span><span class="p">)</span>
+    <span class="c"># PDF</span>
+    <span class="kn">from</span> <span class="nn">pdfreader</span> <span class="kn">import</span> <span class="n">main</span>
+    <span class="n">json</span> <span class="o">=</span> <span class="n">main</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">"pdfreader/book.pdf"</span><span class="p">,</span> <span class="s">"./images/"</span><span class="p">)</span>
+    <span class="n">json</span> <span class="o">=</span> <span class="n">main</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">"pdfreader/book.pdf"</span><span class="p">,</span> <span class="s">"./images/"</span><span class="p">,</span> <span class="s">"ppm"</span><span class="p">)</span> <span class="c">#will extract the images as ppm/pbm ad then convert them as png</span>
+    <span class="n">json</span> <span class="o">=</span> <span class="n">main</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">"pdfreader/book.pdf"</span><span class="p">,</span> <span class="s">"./images/"</span><span class="p">,</span> <span class="s">"jpeg"</span><span class="p">)</span> <span class="c">#default: will extract the images directly as jpg</span>
+</pre></div>
+
+<p>./pdfreader/main.py is just a simplified interface to the very powerful pdfreader/util/convert.py, I have rewrite convert.py to be a class, but this is originally <a href="http://www.unixuser.org/%7Eeuske/python/pdfminer/#pdf2txt">pdf2txt.py</a> from <a href="http://www.unixuser.org/%7Eeuske/python/pdfminer/index.html">pdfminer</a>.
+However, you can still use convert.py as if it was the originial <a href="http://www.unixuser.org/%7Eeuske/python/pdfminer/index.html#pdf2txt">pdf2txt.py</a> tool, <a href="http://www.unixuser.org/%7Eeuske/python/pdfminer/index.html#pdf2txt">here is the documentation</a>.</p>
+
+<pre lang="Shell"><code>    $ pdfreader/util/convert.py -o output.html samples/naacl06-shinyama.pdf
+    (extract text as an HTML file whose filename is output.html)
+
+    $ pdfreader/util/convert.py -V -c euc-jp -o output.html samples/jo.pdf
+    (extract a Japanese HTML file in vertical writing, CMap is required)
+
+    $ pdfreader/util/convert.py -P mypassword -o output.txt secret.pdf
+    (extract a text from an encrypted PDF file)
+</code></pre>
+
+<p>convert.py can also be imported in a python project (but less options are available due to my lack of implementation)</p>
+
+<div class="highlight"><pre>    <span class="c"># @see pdfreader/main.py:text_to_dict as example</span>
+    <span class="kn">from</span> <span class="nn">util.convert</span> <span class="kn">import</span> <span class="n">converter</span>
+    <span class="n">convert</span> <span class="o">=</span> <span class="n">converter</span><span class="p">()</span>
+    <span class="n">xml</span> <span class="o">=</span> <span class="n">convert</span><span class="o">.</span><span class="n">as_xml</span><span class="p">()</span><span class="o">.</span><span class="n">add_input_file</span><span class="p">(</span><span class="n">fileinput</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+
+<h1>
+<a name="how-does-it-work" class="anchor" href="#how-does-it-work"><span class="octicon octicon-link"></span></a>How does it work</h1>
+
+<p>The information are extracted having in mind to keep the parent-child relations.</p>
+
+<ul>
+<li>
+<p>For a pdf file:</p>
+
+<ul>
+<li>A pdf file can have many pages, and so the json string goes. each page has many images and many paragraphs.</li>
+<li>Each paragraph has a width, height, a content(string), a y and x position, a font, and a font size.</li>
+<li>For a pdf file the original image name can't be extracted so the images are name like the followong [uniqId]_p[pageNumber].png. uniqId is a unique Id, pageNumber is the page in which the images is contained. you shouldn't need to use this information since the json string contains it.</li>
+</ul>
+</li>
+<li>
+<p>For a psd file:</p>
+
+<ul>
+<li>A psd file can have many groups which are translated in pages into the json string. each group in a psd file can have many layers, a layer can be either text(paragraphs) or an image(images).</li>
+<li>Each text layer has a width, height, a content(string), a y and x position. The font and font size are currenlty not extracted (because psd-tools doesn't do it).</li>
+<li>For a psd file the image is name with the layer name it come from, but since many layers can have the same name the following is applied to be sure we have a unique name. [uniqId]_[layerName]_[groupName].png.</li>
+</ul>
+</li>
+<li>
+<p>PSD files:</p>
+
+<ul>
+<li>Text: Because of the psd-tools library, you can't know the font, bold, italic, underline attribute.</li>
+</ul>
+</li>
+<li>
+<p>PDF files:</p>
+
+<ul>
+<li>Text: Because of the pdfminer library, you can't have many fonts in the same paragraph. It is also not possible to extract the underlines. However the bold and italic attribute are extracted as html and directly integrated into the string.</li>
+</ul>
+</li>
+</ul><p>You can see under a simplified example taken out from book.pdf of how look the json string.</p>
+
+<h1>
+<a name="json-format-from-pdfreaderbookpdf-simplified" class="anchor" href="#json-format-from-pdfreaderbookpdf-simplified"><span class="octicon octicon-link"></span></a>JSON Format (from pdfreader/book.pdf 'simplified')</h1>
+
+<div class="highlight"><pre>    <span class="p">{</span>
+        <span class="nt">"pages"</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="nt">"images"</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="s2">"961dfcc0-c1eb-11e2-92af-040ccedc7e34_p0.png"</span>
+                <span class="p">],</span>
+                <span class="nt">"paragraphs"</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span>
+                        <span class="nt">"size"</span><span class="p">:</span> <span class="mi">98</span><span class="p">,</span>
+                        <span class="nt">"width"</span><span class="p">:</span> <span class="mi">587</span><span class="p">,</span>
+                        <span class="nt">"string"</span><span class="p">:</span> <span class="s2">"Book Title"</span><span class="p">,</span>
+                        <span class="nt">"y"</span><span class="p">:</span> <span class="mi">-98</span><span class="p">,</span>
+                        <span class="nt">"x"</span><span class="p">:</span> <span class="mi">-324</span><span class="p">,</span>
+                        <span class="nt">"font"</span><span class="p">:</span> <span class="s2">"Georgia"</span><span class="p">,</span>
+                        <span class="nt">"height"</span><span class="p">:</span> <span class="mi">705</span>
+                    <span class="p">}</span>
+                <span class="p">]</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="nt">"images"</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="s2">"96f4e9ee-c1eb-11e2-ad2b-040ccedc7e34_p1.png"</span>
+                <span class="p">],</span>
+                <span class="nt">"paragraphs"</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span>
+                        <span class="nt">"size"</span><span class="p">:</span> <span class="mi">24</span><span class="p">,</span>
+                        <span class="nt">"width"</span><span class="p">:</span> <span class="mi">138</span><span class="p">,</span>
+                        <span class="nt">"string"</span><span class="p">:</span> <span class="s2">"CHAPTER 1"</span><span class="p">,</span>
+                        <span class="nt">"y"</span><span class="p">:</span> <span class="mi">-24</span><span class="p">,</span>
+                        <span class="nt">"x"</span><span class="p">:</span> <span class="mi">-88</span><span class="p">,</span>
+                        <span class="nt">"font"</span><span class="p">:</span> <span class="s2">"Georgia"</span><span class="p">,</span>
+                        <span class="nt">"height"</span><span class="p">:</span> <span class="mi">711</span>
+                    <span class="p">},</span>
+                    <span class="p">{</span>
+                        <span class="nt">"size"</span><span class="p">:</span> <span class="mi">33</span><span class="p">,</span>
+                        <span class="nt">"width"</span><span class="p">:</span> <span class="mi">489</span><span class="p">,</span>
+                        <span class="nt">"string"</span><span class="p">:</span> <span class="s2">"Lorem ipsum dolor sit amet, consectetur \n&lt;i&gt;adipisicing&lt;/i&gt; &lt;b&gt;elit, sed&lt;/b&gt; &lt;i&gt;&lt;b&gt;do eiusmod&lt;/i&gt;&lt;/b&gt;\ntempor incididunt ut labore et dolore \nmagna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris \nnisi ut aliquip ex ea commodo\nconsequat."</span><span class="p">,</span>
+                        <span class="nt">"y"</span><span class="p">:</span> <span class="mi">-229</span><span class="p">,</span>
+                        <span class="nt">"x"</span><span class="p">:</span> <span class="mi">-439</span><span class="p">,</span>
+                        <span class="nt">"font"</span><span class="p">:</span> <span class="s2">"Georgia"</span><span class="p">,</span>
+                        <span class="nt">"height"</span><span class="p">:</span> <span class="mi">269</span>
+                    <span class="p">}</span>
+                <span class="p">]</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="nt">"paragraphs"</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span>
+                        <span class="nt">"size"</span><span class="p">:</span> <span class="mi">24</span><span class="p">,</span>
+                        <span class="nt">"width"</span><span class="p">:</span> <span class="mi">133</span><span class="p">,</span>
+                        <span class="nt">"string"</span><span class="p">:</span> <span class="s2">"SECTION 1"</span><span class="p">,</span>
+                        <span class="nt">"y"</span><span class="p">:</span> <span class="mi">-24</span><span class="p">,</span>
+                        <span class="nt">"x"</span><span class="p">:</span> <span class="mi">-83</span><span class="p">,</span>
+                        <span class="nt">"font"</span><span class="p">:</span> <span class="s2">"Georgia"</span><span class="p">,</span>
+                        <span class="nt">"height"</span><span class="p">:</span> <span class="mi">711</span>
+                    <span class="p">}</span>
+                <span class="p">]</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+</pre></div>
+
+<h1>
+<a name="how-to-improve-it" class="anchor" href="#how-to-improve-it"><span class="octicon octicon-link"></span></a>How to improve it</h1>
+
+<ul>
+<li>The psd-tools library should be improved to be able to take out the font, bold italic underline attribute</li>
+<li>The pdfminer library should be improved to be able to take out the underline attribute</li>
+<li>Matching the pep8?</li>
+<li>Checking if the proposed image folder exist if not we create it if we can't fire an error and stop</li>
+<li>Adding support for more file format</li>
+<li>Speed is not an issue but why not improving it ?</li>
+<li>The psd-tools library should be improved to be able to extract layers containing fx effect (is this even possible?)</li>
+<li>Depending of the platform or a parameter the <code>\n</code> into the string attribute in JSON should become <code>&lt;br/&gt;</code> or <code>\r\n</code>
+</li>
+<li>Reduce the number of dependencies ?</li>
+<li>What else ?</li>
+</ul><h1>
+<a name="contributing" class="anchor" href="#contributing"><span class="octicon octicon-link"></span></a>Contributing</h1>
+
+<p>You're welcome to contribute to this project in any way you can. If you don't know how to code, don't have time, don't worry, you still can post issue, I will be happy to answer you and correct it as fast as possible.
+Want to code ? fork it and submit pull request! Also, pull request comming with an example of what has been improved will be merge in priority.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Content-extractor maintained by <a href="https://github.com/Micka33">Micka33</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
