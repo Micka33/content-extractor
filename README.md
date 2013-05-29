@@ -63,12 +63,12 @@ You can also use the pdfreader and psdtools script independently doing so:
     Python:
 
     from psdtools import main
-    json main.run("psdtools/work.psd", "./images/")
+    json = main.run("psdtools/work.psd", "./images/")
 
     from pdfreader import main
-    json main.run("pdfreader/book.pdf", "./images/")
-    json main.run("pdfreader/book.pdf", "./images/", "ppm")#will extract the images as ppm/pbm ad then convert them as png
-    json main.run("pdfreader/book.pdf", "./images/", "jpeg")#default: will extract the images directly as jpg
+    json = main.run("pdfreader/book.pdf", "./images/")
+    json = main.run("pdfreader/book.pdf", "./images/", "ppm") #will extract the images as ppm/pbm ad then convert them as png
+    json = main.run("pdfreader/book.pdf", "./images/", "jpeg") #default: will extract the images directly as jpg
 
 
 ./pdfreader/main.py is just a simplified interface to the very powerful pdfreader/util/convert.py, I have rewrite convert.py to be a class, but this is originally [pdf2txt.py](http://www.unixuser.org/~euske/python/pdfminer/#pdf2txt) from [pdfminer](http://www.unixuser.org/~euske/python/pdfminer/index.html).
