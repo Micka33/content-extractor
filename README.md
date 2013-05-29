@@ -62,8 +62,8 @@ You can also use the pdfreader and psdtools script independently doing so:
 
 ```Shell
     # Shell:
-    ./psdtools/main.py psdtools/work.psd './images/'
-    ./pdfreader/main.py pdfreader/book.pdf './images/'
+    $ ./psdtools/main.py psdtools/work.psd './images/'
+    $ ./pdfreader/main.py pdfreader/book.pdf './images/'
 ```
 ```Python
     # Python:
