@@ -51,7 +51,7 @@ class ImportPSD(object):
                 layer_num += 1
             elif isinstance(sheet, psd_tools.user_api.psd_image.Group):
                 if sheet.visible_global:
-                    layer_num = self.browseSheets(sheets=sheet.layers, layer_num=layer_num+1)
+                    layer_num = self.countLayers(layers=sheet.layers, layer_num=layer_num)
         return  layer_num
 
 
@@ -92,7 +92,6 @@ class ImportPSD(object):
                     array['images'].append(imageName)
             elif isinstance(sheet, psd_tools.user_api.psd_image.Group):
                 """ this sheet is a group and may contains many layers """
-                print "Now processing group " % page_num
                 if sheet.visible_global:
                     arr = self.browseSheets(sheets=sheet.layers, parentName=sheet.name, page_num=page_num+1)
                     self.data['pages'].append(arr)
@@ -117,6 +116,6 @@ def run(pdf_file, image_folder):
 if __name__ == '__main__':
     import sys
     if len(sys.argv) is 3:
-        run(sys.argv[1], sys.argv[2])
+        print run(sys.argv[1], sys.argv[2])
     else:
         print "usage: %s pdf_file_path generated_images_path/ (eg: python %s book.pdf './images/')" % (sys.argv[0], sys.argv[0])
