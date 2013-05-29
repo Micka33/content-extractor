@@ -41,26 +41,31 @@ import os
 
 def get_img_names_by_page_number():
     image_list = {}
+    nb_images = 0
     ppm_images = glob.glob('./tempimg*.*')
     for image in ppm_images:
         match = re.match( r'\./tempimg\-(\d+)\-(\d+)\.[jpg|ppm|pbm]', image, re.M|re.I)
         if match:
             page_num = int(match.group(1)) - 1
             image_num = int(match.group(2))
+            nb_images += 1
             if page_num not in image_list:
                 image_list[page_num] = {}
             image_list[page_num].update({image_num:image})
-    return image_list
+    return image_list, nb_images
 
 def rename_imgs__update_dict(image_list, dict_book, image_folder, AS="jpeg"):
+    image_num = 1
     for page in image_list.iterkeys():
         for image in image_list[page].iterkeys():
+            print "Processing image %d" % image_num
+            image_num += 1
             if 'images' not in dict_book['pages'][page]:
                 dict_book['pages'][page].update({'images':[]})
             if "jpeg" in AS:
                 image_name = "%s_p%d.jpg" % (uuid.uuid1(), page)
                 dict_book['pages'][page]['images'].append(image_name)
-                subprocess.call('mv %s %s'%(image_list[page][image], image_folder+image_name), shell=True, stderr=sys.stdout)
+                subprocess.call('mv %s %s' % (image_list[page][image], image_folder+image_name), shell=True, stderr=sys.stdout)
             elif "ppm" in AS:
                 image_name = "%s_p%d.png" % (uuid.uuid1(), page)
                 dict_book['pages'][page]['images'].append(image_name)
@@ -69,13 +74,16 @@ def rename_imgs__update_dict(image_list, dict_book, image_folder, AS="jpeg"):
     return dict_book
 
 def get_images_update_dict(dict_book, image_folder, AS="jpeg"):
-    image_list = get_img_names_by_page_number()
+    image_list, nb_images = get_img_names_by_page_number()
+    print "%d images to process" % nb_images
     dict_book = rename_imgs__update_dict(image_list, dict_book, image_folder, AS)
     return dict_book
 
 
 def run(pdf_file, image_folder, AS="jpeg"):
+    print "Reading PDF"
     dict_book = text_to_dict(pdf_file)
+    print "Extracting images"
     extract_images(pdf_file, AS)
     dict_book = get_images_update_dict(dict_book, image_folder, AS)
     return json.dumps(dict_book)
