@@ -60,11 +60,12 @@ You can also import parser.py into your own python project and use it the folowi
 You can also use the pdfreader and psdtools script independently doing so:
 
 
-```Python
+```Shell
     # Shell:
     ./psdtools/main.py psdtools/work.psd './images/'
     ./pdfreader/main.py pdfreader/book.pdf './images/'
-
+```
+```Python
     # Python:
     # PSD
     from psdtools import main
