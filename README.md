@@ -54,17 +54,15 @@ You can also import parser.py into your own python project and use it the folowi
 
 You can also use the pdfreader and psdtools script independently doing so:
 
-    Shell:
-
+    # Shell:
     ./psdtools/main.py psdtools/work.psd './images/'
     ./pdfreader/main.py pdfreader/book.pdf './images/'
 
-
-    Python:
-
+    # Python:
+    # PSD
     from psdtools import main
     json = main.run("psdtools/work.psd", "./images/")
-
+    # PDF
     from pdfreader import main
     json = main.run("pdfreader/book.pdf", "./images/")
     json = main.run("pdfreader/book.pdf", "./images/", "ppm") #will extract the images as ppm/pbm ad then convert them as png
