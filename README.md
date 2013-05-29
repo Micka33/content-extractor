@@ -32,28 +32,35 @@ The script assume the following:
 
 When you launch the script, it's installing [pip](https://pypi.python.org/pypi/pip), if it isn't already present on your system.
 
+```Shell
     cd install
     sh install.sh
+```
 
 How to use it
 =================
 
 For any extension (currently pdf/psd) you can use `parser.py [file_path] [image_path]` it will automaticaly do the job.
 
+```Python
     #Will write a metada.json and extract the images into the folder images
     ./parser.py psdtools/work.psd './images/'
     ./parser.py pdfreader/book.pdf './images/'
+```
 
 You can also import parser.py into your own python project and use it the folowing way:
 
+```Python
     #will return a string containing the json and extract the images into the folder images
     from parser import parser
     json = parser.parse("psdtools/work.psd", "./images/")
     json = parser.parse("pdfreader/book.pdf", "./images/")
-
+```
 
 You can also use the pdfreader and psdtools script independently doing so:
 
+
+```Python
     # Shell:
     ./psdtools/main.py psdtools/work.psd './images/'
     ./pdfreader/main.py pdfreader/book.pdf './images/'
@@ -67,11 +74,13 @@ You can also use the pdfreader and psdtools script independently doing so:
     json = main.run("pdfreader/book.pdf", "./images/")
     json = main.run("pdfreader/book.pdf", "./images/", "ppm") #will extract the images as ppm/pbm ad then convert them as png
     json = main.run("pdfreader/book.pdf", "./images/", "jpeg") #default: will extract the images directly as jpg
+```
 
 
 ./pdfreader/main.py is just a simplified interface to the very powerful pdfreader/util/convert.py, I have rewrite convert.py to be a class, but this is originally [pdf2txt.py](http://www.unixuser.org/~euske/python/pdfminer/#pdf2txt) from [pdfminer](http://www.unixuser.org/~euske/python/pdfminer/index.html).
 However, you can still use convert.py as if it was the originial [pdf2txt.py](http://www.unixuser.org/~euske/python/pdfminer/index.html#pdf2txt) tool, [here is the documentation](http://www.unixuser.org/~euske/python/pdfminer/index.html#pdf2txt).
 
+```Shell
     $ pdfreader/util/convert.py -o output.html samples/naacl06-shinyama.pdf
     (extract text as an HTML file whose filename is output.html)
 
@@ -80,14 +89,16 @@ However, you can still use convert.py as if it was the originial [pdf2txt.py](ht
 
     $ pdfreader/util/convert.py -P mypassword -o output.txt secret.pdf
     (extract a text from an encrypted PDF file)
+```
 
 convert.py can also be imported in a python project (but less options are available due to my lack of implementation)
 
+```Python
     # @see pdfreader/main.py:text_to_dict as example
     from util.convert import converter
     convert = converter()
     xml = convert.as_xml().add_input_file(fileinput).run()
-
+```
 
 How does it work
 =================
@@ -115,6 +126,7 @@ You can see under a simplified example taken out from book.pdf of how look the j
 JSON Format (from pdfreader/book.pdf 'simplified')
 =================
 
+```JSON
     {
         "pages": [
             {
@@ -173,7 +185,7 @@ JSON Format (from pdfreader/book.pdf 'simplified')
             }
         ]
     }
-
+```
 
 How to improve it
 =================
