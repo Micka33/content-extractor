@@ -35,7 +35,7 @@ if __name__ == '__main__':
     if len(sys.argv) is 3:
         json = parse(sys.argv[1], sys.argv[2])
         """ We write the json into a file called metadata.json """
-        target = open("metadata.json", 'w+') ## a will append, w will over-write
+        target = open("metadata.json", 'w+') # a will append, w will over-write
         target.write(json)
         target.close()
     else:
