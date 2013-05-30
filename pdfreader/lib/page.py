@@ -27,7 +27,7 @@ class page(object):
         string = StringIO()
         count = 0
         for p in self._paragraphs:
-            if count is not 0:
+            if count != 0:
                 string.write("\n\n")
             string.write(str(p))
             count = 1

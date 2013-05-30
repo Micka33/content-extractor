@@ -21,10 +21,10 @@ images are named respecting the following convention: tempppm-[pageNumber]-[imag
 import subprocess
 import sys
 
-def extract_images(file, AS="jpeg"):
+def extract_images(file, AS="png"):
     if "jpeg" in AS:
         subprocess.call('/usr/local/bin/pdfimages -p -j '+file+' tempimg', shell=True, stderr=sys.stdout)
-    elif "ppm" in AS:
+    elif "png" in AS:
         subprocess.call('/usr/local/bin/pdfimages -p '+file+' tempimg', shell=True, stderr=sys.stdout)
 
 
@@ -54,7 +54,7 @@ def get_img_names_by_page_number():
             image_list[page_num].update({image_num:image})
     return image_list, nb_images
 
-def rename_imgs__update_dict(image_list, dict_book, image_folder, AS="jpeg"):
+def rename_imgs__update_dict(image_list, dict_book, image_folder, AS="png"):
     image_num = 1
     for page in image_list.iterkeys():
         for image in image_list[page].iterkeys():
@@ -65,34 +65,34 @@ def rename_imgs__update_dict(image_list, dict_book, image_folder, AS="jpeg"):
             if "jpeg" in AS:
                 image_name = "%s_p%d.jpg" % (uuid.uuid1(), page)
                 dict_book['pages'][page]['images'].append(image_name)
-                subprocess.call('mv %s %s' % (image_list[page][image], image_folder+image_name), shell=True, stderr=sys.stdout)
-            elif "ppm" in AS:
+                #subprocess.call('mv %s %s' % (image_list[page][image], image_folder+image_name), shell=True, stderr=sys.stdout)
+            elif "png" in AS:
                 image_name = "%s_p%d.png" % (uuid.uuid1(), page)
                 dict_book['pages'][page]['images'].append(image_name)
                 subprocess.call('/usr/local/bin/convert %s %s'%(image_list[page][image], image_folder+image_name), shell=True, stderr=sys.stdout)
                 os.remove(image_list[page][image])
     return dict_book
 
-def get_images_update_dict(dict_book, image_folder, AS="jpeg"):
+def get_images_update_dict(dict_book, image_folder, AS="png"):
     image_list, nb_images = get_img_names_by_page_number()
     print "%d images to process" % nb_images
-    dict_book = rename_imgs__update_dict(image_list, dict_book, image_folder, AS)
+    dict_book = rename_imgs__update_dict(image_list, dict_book, image_folder, AS=AS)
     return dict_book
 
 
-def run(pdf_file, image_folder, AS="jpeg"):
+def run(pdf_file, image_folder, AS="png"):
     print "Reading PDF"
     dict_book = text_to_dict(pdf_file)
     print "Extracting images"
-    extract_images(pdf_file, AS)
-    dict_book = get_images_update_dict(dict_book, image_folder, AS)
+    extract_images(pdf_file, AS=AS)
+    dict_book = get_images_update_dict(dict_book, image_folder, AS=AS)
     return json.dumps(dict_book)
 
 
 if __name__ == '__main__':
     import sys
-    if len(sys.argv) is 3:
-        print run(sys.argv[1], sys.argv[2])
+    if len(sys.argv) == 3:
+        print run(pdf_file=sys.argv[1], image_folder=sys.argv[2])
     else:
         print "usage: %s pdf_file_path generated_images_path/ (eg: python %s book.pdf './images/')" % (sys.argv[0], sys.argv[0])
 

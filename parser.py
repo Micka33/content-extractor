@@ -32,7 +32,7 @@ def parse(file_path, image_folder):
 
 if __name__ == '__main__':
     import sys
-    if len(sys.argv) is 3:
+    if len(sys.argv) == 3:
         json = parse(sys.argv[1], sys.argv[2])
         """ We write the json into a file called metadata.json """
         target = open("metadata.json", 'w+') # a will append, w will over-write

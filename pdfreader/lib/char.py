@@ -35,8 +35,8 @@ class char(object):
             self._x = int(float(left)) - self._width
             self._y = int(float(top)) - self._height
             self._size = int(float(xml_char.get('size')))
-            self._isBold = True if len(self._font.split('-')) is 2 and 'Bold' in self._font.split('-')[1] else False
-            self._isItalic = True if len(self._font.split('-')) is 2 and 'Italic' in self._font.split('-')[1] else False
+            self._isBold = True if len(self._font.split('-')) == 2 and 'Bold' in self._font.split('-')[1] else False
+            self._isItalic = True if len(self._font.split('-')) == 2 and 'Italic' in self._font.split('-')[1] else False
             self._font = self._font.split('-')[0]
             #
             self._char = xml_char.string

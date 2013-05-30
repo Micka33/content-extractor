@@ -115,7 +115,7 @@ def run(pdf_file, image_folder):
 
 if __name__ == '__main__':
     import sys
-    if len(sys.argv) is 3:
+    if len(sys.argv) == 3:
         print run(sys.argv[1], sys.argv[2])
     else:
         print "usage: %s pdf_file_path generated_images_path/ (eg: python %s book.pdf './images/')" % (sys.argv[0], sys.argv[0])

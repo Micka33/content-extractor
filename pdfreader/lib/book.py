@@ -32,7 +32,7 @@ class book(object):
         string = StringIO()
         count = 0
         for p in self._pages:
-            if count is not 0:
+            if count != 0:
                 string.write('NEW PAGE')
             string.write(str(p))
             count = 1

@@ -52,7 +52,7 @@ class paragraph(object):
         string = StringIO()
         count = 0
         for l in self._lines:
-            if count is not 0:
+            if count != 0:
                 string.write("\n")
             string.write(str(l))
             count = 1
@@ -63,7 +63,7 @@ class paragraph(object):
         string = StringIO()
         count = 0
         for l in self._lines:
-            if count is not 0:
+            if count != 0:
                 string.write("\n")
             string.write(str(l))
             count = 1
