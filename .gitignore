@@ -17,3 +17,6 @@ psdtools/images/.DS_Store
 /install/install02500809/
 /images/
 /psd_rb/.idea/
+/psd_rb/Gemfile.lock
+/psd_rb/.DS_Store
+/psd_rb/psds/
