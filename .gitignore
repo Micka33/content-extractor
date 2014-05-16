@@ -20,3 +20,5 @@ psdtools/images/.DS_Store
 /psd_rb/Gemfile.lock
 /psd_rb/.DS_Store
 /psd_rb/psds/
+/psd_rb/output/
+/psd_rb/output.txt
