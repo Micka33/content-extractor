@@ -76,7 +76,7 @@ class PandaPsd
     elsif @psd.pget_dimensions == [1536, 2048]
       @orientation = 'portrait'
     else
-      # @errors << 'Dimensions are wrong. Only 2048x1536 or 1536x2048.'
+      @errors << 'Dimensions are wrong. Only 2048x1536 or 1536x2048.'
     end
   end
 

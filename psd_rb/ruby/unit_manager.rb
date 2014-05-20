@@ -7,7 +7,7 @@ class UnitManager
   end
   attr_reader :units
 
-  def create_unit layer
+  def create_unit(layer)
     unit = UnitFactory::create_unit(layer)
     @units << unit
     unit
