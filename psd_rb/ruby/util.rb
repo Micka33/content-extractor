@@ -28,6 +28,19 @@ PSD::Node::Base.send(:define_method, 'pis_group') do
   group?
 end
 
+PSD::Node::Base.send(:define_method, 'pvisible_tree?') do
+  see_it = true
+  see_it = visible? unless root?
+  # noinspection RubyScope
+  def rec(node, see_it)
+    see_it = node.visible? unless node.root? || (!see_it)
+    see_it = rec(node.parent, see_it) unless node.root? || (!see_it)
+    see_it
+  end
+  see_it = rec(parent, see_it) unless root? || (!see_it)
+  see_it
+end
+
 PSD::Node::Base.send(:define_method, 'pget_mask_position') do
   {
     top:    mask.top-top,

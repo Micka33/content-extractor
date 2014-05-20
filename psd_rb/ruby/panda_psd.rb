@@ -1,7 +1,4 @@
 require 'psd'
-require 'benchmark'
-require 'pp'
-
 require_relative 'util'
 require_relative 'unit_manager'
 
@@ -46,7 +43,7 @@ class PandaPsd
     # so = @psd.pget_layer_by_name('image croppée')
     # if so.phas_mask
     #   so.pas_png # get the whole image without cropping
-    #   pp so.pget_mask_position
+    #   puts so.pget_mask_position
     # end
     #
     # #get a text
@@ -58,7 +55,7 @@ class PandaPsd
     #   pp so.hidden?
     #   pp so.pvisible
     # end
-    # pp UnitFactory::create_unit(so).as_json
+    # puts UnitFactory::create_unit(so).as_json
 
     self
   end
@@ -67,13 +64,13 @@ class PandaPsd
 
   def go_through
     return nil unless @errors.empty?
-
-    puts ''
     @psd.tree.descendants_layers.each do |layer|
-      puts "Name  : #{layer.name}"
-      puts "Unit  : #{@unitManager.create_unit(layer).type}"
-      puts "Parent: #{layer.parent.name || 'root'}"
-      puts ''
+      if layer.pvisible_tree?
+        puts "Name  : #{layer.name}"
+        puts "Unit  : #{@unitManager.create_unit(layer).type}"
+        puts "Parent: #{layer.parent.name || 'root'}"
+        puts ''
+      end
     end
 
   end
@@ -93,11 +90,3 @@ end
 
 
 
-Benchmark.bm(10) do |x|
-  x.report('PandaPsd:') {
-    # psd = PandaPsd.new(file:'../psds/rmn_v3.psd').parse
-    psd = PandaPsd.new(file:'../psds/micka.psd').parse
-    pp 'infos  -> '+psd.info.join(', ')
-    pp 'errors -> '+psd.errors.join(', ')
-  }
-end
