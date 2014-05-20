@@ -65,14 +65,8 @@ class PandaPsd
   def go_through
     return nil unless @errors.empty?
     @psd.tree.descendants_layers.each do |layer|
-      if layer.pvisible_tree?
-        puts "Name  : #{layer.name}"
-        puts "Unit  : #{@unitManager.create_unit(layer).type}"
-        puts "Parent: #{layer.parent.name || 'root'}"
-        puts ''
-      end
+      @unitManager.create_unit(layer) if layer.pvisible_tree?
     end
-
   end
 
   def check_dimensions
