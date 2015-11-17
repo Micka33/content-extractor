@@ -1,6 +1,8 @@
 #!/usr/bin/python
-from pdfminer.pdfparser import PDFDocument, PDFParser
-from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter, process_pdf
+from pdfminer.pdfdocument import PDFDocument
+from pdfminer.pdfparser import  PDFParser
+from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
+from pdfminer.pdfpage import PDFPage
 from pdfminer.pdfdevice import PDFDevice, TagExtractor
 from pdfminer.converter import XMLConverter, HTMLConverter, TextConverter
 from pdfminer.cmapdb import CMapDB
@@ -137,7 +139,11 @@ class converter(object):
             return usage()
         for fname in self._args:
             fp = file(fname, 'rb')
-            process_pdf(rsrcmgr, device, fp, self._pagenos, maxpages=self._maxpages, password=self._password, caching=self._caching, check_extractable=True)
+	    interpreter = PDFPageInterpreter(rsrcmgr, device)
+
+            for page in PDFPage.get_pages(fp, self._pagenos, maxpages=self._maxpages, password=self._password, caching=self._caching, check_extractable=True):
+            	interpreter.process_page(page)
+
             fp.close()
         device.close()
         if __name__ == '__main__':
